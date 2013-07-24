@@ -1,5 +1,3 @@
-var us = require("./underscore.js");
-
 var SnakeGame = (function(){
 
   var SIZE = 10
@@ -15,7 +13,7 @@ var SnakeGame = (function(){
     })
 
     this.getPosition = function(coords){
-      this.grid[coords[0]+coords[1]*this.width];
+      return this.grid[coords[0]+coords[1]*this.width];
     };
 
     this.setPosition = function(coords, elem){
@@ -23,11 +21,23 @@ var SnakeGame = (function(){
     };
 
     this.offBoard = function(coords){
-      return coords[0] < 0 || coords[0] > this.width ||
-             coords[1] < 0 || coords[1] > this.height;
+      return coords[0] < 0 || coords[0] > this.width + 1  ||
+             coords[1] < 0 || coords[1] > this.height + 1 ;
+    }
+
+    this.removeApple = function(){
+      var applePos = 0;
+      _.each(this.grid, function(elem, index){
+        if (elem === "apple"){
+          applePos = index;
+        }
+      });
+
+      this.grid[applePos] ="_";
     }
 
     this.addApple = function(){
+      this.removeApple();
       var openPositions = []
       _.each(this.grid, function(pos, index){
         if (pos === "_"){
@@ -102,13 +112,20 @@ var SnakeGame = (function(){
 
     this.dead = function(){
       var front = this.front();
-      return this.board.getPosition([front.xPos, front.yPos]) === "snake" ||
-             this.board.offBoard([front.xPos, front.yPos]);
+      var nextXSpot = front.xPos + this.direction[0];
+      var nextYSpot = front.yPos + this.direction[1]
+      return this.board.getPosition([nextXSpot, nextYSpot]) === "snake" ||
+             this.board.offBoard([nextXSpot, nextYSpot]);
     }
 
     this.eat = function(){
       var front = this.front();
-      return this.board.getPosition([front.xPos, front.yPos]) === "apple";
+      var nextXSpot = front.xPos + this.direction[0];
+      var nextYSpot = front.yPos + this.direction[1]
+      console.log("APPLE?");
+      console.log(front.xPos + " " + front.yPos)
+      console.log (this.board.getPosition([nextXSpot, nextYSpot]));
+      return this.board.getPosition([nextXSpot, nextYSpot]) === "apple";
     }
 
     this.move = function(){
@@ -143,7 +160,7 @@ var SnakeGame = (function(){
     this.west = false;
     this.north = false;
     this.south = false;
-    this.gameOver = false;
+
 
     this.nextMove = function(){
       var direc = this.snake.direction
@@ -162,28 +179,38 @@ var SnakeGame = (function(){
       this.snake.setDirection(direc);
     }
 
+    this.gameOver = function(){
+      console.log("GAME OVER")
+      this.snake = new Snake(this.board);
+      this.board.addApple();
+    }
+
     this.step = function(){
+
+      if (this.snake.dead()){
+        this.gameOver();
+      }
+      this.board.update(this.snake);
       this.nextMove();
       if (this.snake.eat()){
+        console.log("I ATE")
         this.snake.grow();
         this.board.addApple();
       }
       else {
         this.snake.move();
       }
-      this.board.update(this.snake);
-      if (this.snake.dead){
-        this.gameOver = true;
-      }
+
+
     };
 
     this.start = function(){
       var that = this;
       that.board.update(this.snake);
-      that.board.addApple();
+      that.board.setPosition([8,5], "apple")
       window.setInterval(function(){
         that.step();
-      }, 2000);
+      }, 1000);
     };
   }
 
