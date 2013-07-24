@@ -16,6 +16,7 @@ var run_step = function(){
       square.addClass("apple")
     }
   });
+  $('#score').html('<h1>' + game.score + '</h1>')
 }
 
 $(function(){
@@ -45,6 +46,12 @@ $(function(){
       game.south = false;
       game.east = true;
       game.west = false;
+    }
+
+    else if(event.keyCode === 13){
+      if(game.stop){
+        game.resetGame();
+      }
     }
   })
 

@@ -1,7 +1,8 @@
 var SnakeGame = (function(){
 
   var SIZE = 20
-
+  var SNAKESPEED = 100
+  var SNAKEINTERVAL
   var Board = function(size){
     this.width = size;
     this.height = size;
@@ -164,7 +165,8 @@ var SnakeGame = (function(){
     this.west = false;
     this.north = false;
     this.south = false;
-
+    this.score = 0;
+    this.stop = false;
 
     this.nextMove = function(){
       var direc = this.snake.direction
@@ -190,6 +192,17 @@ var SnakeGame = (function(){
       this.west = false;
       this.north = false;
       this.south = false;
+      window.clearInterval(SNAKEINTERVAL);
+      this.stop = true;
+    }
+
+    this.resetGame = function(){
+      var that = this;
+      SNAKEINTERVAL = window.setInterval(function(){
+        that.step();
+      }, SNAKESPEED);
+      this.score = 0;
+      this.stop = false;
     }
 
     this.step = function(){
@@ -201,6 +214,7 @@ var SnakeGame = (function(){
       else if (this.snake.eat()){
         this.snake.grow();
         this.board.addApple();
+        this.score += 10
       }
       else {
         this.snake.move();
@@ -212,9 +226,9 @@ var SnakeGame = (function(){
       var that = this;
       that.board.update(this.snake);
       that.board.setPosition([8,5], "apple")
-      window.setInterval(function(){
+      SNAKEINTERVAL = window.setInterval(function(){
         that.step();
-      }, 100);
+      }, SNAKESPEED);
     };
   }
 
