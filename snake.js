@@ -1,6 +1,6 @@
 var SnakeGame = (function(){
 
-  var SIZE = 20
+  var SIZE = 30
   var SNAKESPEED = 100
   var SNAKEINTERVAL
   var Board = function(size){
@@ -48,18 +48,20 @@ var SnakeGame = (function(){
       this.grid[openPositions[_.random(0,openPositions.length)]] = "apple"
     }
 
-    this.update = function(snake){
+    this.update = function(snakes){
       var that = this;
       this.clearBoard();
-      _.each(snake.bodyParts, function(bodyPart, index){
-        var item = ""
-        if (index === 0){
-          item = "rattle"
-        }
-        else {
-          item = "snake"
-        }
-        that.setPosition([bodyPart.xPos, bodyPart.yPos], item)
+      _.each(snakes, function(snake){
+        _.each(snake.bodyParts, function(bodyPart, index){
+          var item = ""
+          if (index === 0){
+            item = "rattle"
+          }
+          else {
+            item = "snake"
+          }
+          that.setPosition([bodyPart.xPos, bodyPart.yPos], item)
+        })
       })
     }
 
@@ -161,10 +163,18 @@ var SnakeGame = (function(){
   var Game = function(){
     this.board = new Board(SIZE);
     this.snake = new Snake(this.board);
+    this.snake2 = new Snake(this.board);
+    this.snake2.direction = [-1, 0];
+    this.snake2.move();
+    this.snake2.move();
     this.east = false;
     this.west = false;
     this.north = false;
     this.south = false;
+    this.east2 = false;
+    this.west2 = false;
+    this.north2 = false;
+    this.south2 = false;
     this.score = 0;
     this.stop = false;
 
@@ -183,10 +193,29 @@ var SnakeGame = (function(){
         direc = [0,1];
       }
       this.snake.setDirection(direc);
+
+      var direc2 = this.snake2.direction;
+
+      if (this.east2){
+        direc2 = [1,0];
+      }
+      else if(this.west2){
+        direc2 = [-1,0];
+      }
+      else if(this.south2){
+        direc2 = [0,-1];
+      }
+      else if(this.north2){
+        direc2 = [0,1];
+      }
+      this.snake2.setDirection(direc2);
     }
 
     this.gameOver = function(){
       this.snake = new Snake(this.board);
+      this.snake2 = new Snake(this.board);
+      this.snake2.direction = [-1, 0];
+
       this.board.addApple();
       this.east = false;
       this.west = false;
@@ -228,7 +257,20 @@ var SnakeGame = (function(){
       else {
         this.snake.move();
       }
-      this.board.update(this.snake);
+
+      if (this.snake2.dead()){
+        this.gameOver();
+      }
+      else if (this.snake2.eat()){
+        this.snake2.grow();
+        this.board.addApple();
+        this.score += 10;
+        this.increaseSpeed();
+      }
+      else {
+        this.snake2.move();
+      }
+      this.board.update([this.snake,this.snake2]);
     };
 
     this.start = function(){
