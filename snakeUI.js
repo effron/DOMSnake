@@ -19,7 +19,7 @@ var run_step = function(){
   $('#score').html('<h1>' + game.score + '</h1>')
 
   if (game.stop){
-    $('#gameover').html('<h1>GAME OVER. HIT ENTER TO RESET</h1>')
+    $('#gameover').html('<h1>PLAYER ' + game.losingSnake + ' LOSES.</h1><h2> Press return to start a new game</h2>')
   }
   else{
     $('#gameover').html('')

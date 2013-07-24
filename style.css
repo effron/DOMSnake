@@ -1,22 +1,40 @@
 .apple {
-  background-color: red;
+  background-color: #C14644;
+  border-radius: 2px;
 }
 
 .snake {
   background-color: black;
+  border-radius: 4px;
 }
 
 .rattle {
   background-color: purple;
+  border-radius: 40px;
 }
 
 div {
   height:20px;
   width:20px;
-  background-color: yellow;
+  margin: 0px;
+  padding:0px;
 }
 
 body {
-  background-color: blue;
+  background-color: #BDD0F0;
+}
+
+table {
+  border: 30px solid #204160;
+}
+
+td {
+  margin: 0px;
+  padding: 0px;
+}
+
+h1, h2{
+  color: #1B4521;
+  font-family: arial;
 }
 
