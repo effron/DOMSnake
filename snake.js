@@ -50,8 +50,15 @@ var SnakeGame = (function(){
     this.update = function(snake){
       var that = this;
       this.clearBoard();
-      _.each(snake.bodyParts, function(bodyPart){
-        that.setPosition([bodyPart.xPos, bodyPart.yPos], "snake")
+      _.each(snake.bodyParts, function(bodyPart, index){
+        var item = ""
+        if (index === 0){
+          item = "rattle"
+        }
+        else {
+          item = "snake"
+        }
+        that.setPosition([bodyPart.xPos, bodyPart.yPos], item)
       })
     }
 
@@ -59,7 +66,7 @@ var SnakeGame = (function(){
       var that = this;
 
       _.each(this.grid, function(elem, index){
-        if (elem === "snake"){
+        if (elem === "snake" || elem === "rattle"){
           that.grid[index] = "_";
         }
       })

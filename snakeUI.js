@@ -3,10 +3,14 @@ var size = SnakeGame.size
 game.start();
 var run_step = function(){
   _.each(game.board.grid, function(elem, index){
-    square = $('#'+index)
-    square.removeClass("snake apple")
+    square = $('#'+index);
+    square.removeClass("snake apple");
+    square.removeClass("rattle");
     if (elem === "snake"){
       square.addClass("snake");
+    }
+    else if (elem === "rattle"){
+      square.addClass("rattle")
     }
     else if (elem === "apple"){
       square.addClass("apple")

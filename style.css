@@ -6,6 +6,10 @@
   background-color: black;
 }
 
+.rattle {
+  background-color: purple;
+}
+
 div {
   height:20px;
   width:20px;
@@ -15,3 +19,4 @@ div {
 body {
   background-color: blue;
 }
+
