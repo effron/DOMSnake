@@ -1,6 +1,6 @@
 var SnakeGame = (function(){
 
-  var SIZE = 10
+  var SIZE = 20
 
   var Board = function(size){
     this.width = size;
@@ -209,11 +209,12 @@ var SnakeGame = (function(){
       that.board.setPosition([8,5], "apple")
       window.setInterval(function(){
         that.step();
-      }, 200);
+      }, 100);
     };
   }
 
   return {
-    Game: Game
+    Game: Game,
+    size: SIZE
   };
 })();
