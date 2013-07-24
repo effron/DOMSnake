@@ -1,0 +1,17 @@
+.apple {
+  background-color: red;
+}
+
+.snake {
+  background-color: black;
+}
+
+div {
+  height:20px;
+  width:20px;
+  background-color: yellow;
+}
+
+body {
+  background-color: blue;
+}
