@@ -205,6 +205,14 @@ var SnakeGame = (function(){
       this.stop = false;
     }
 
+    this.increaseSpeed = function(){
+      var that = this;
+      window.clearInterval(SNAKEINTERVAL);
+      SNAKEINTERVAL = window.setInterval(function(){
+        that.step();
+      }, SNAKESPEED - that.score/10)
+    }
+
     this.step = function(){
       this.nextMove();
 
@@ -214,7 +222,8 @@ var SnakeGame = (function(){
       else if (this.snake.eat()){
         this.snake.grow();
         this.board.addApple();
-        this.score += 10
+        this.score += 10;
+        this.increaseSpeed();
       }
       else {
         this.snake.move();

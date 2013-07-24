@@ -17,6 +17,13 @@ var run_step = function(){
     }
   });
   $('#score').html('<h1>' + game.score + '</h1>')
+
+  if (game.stop){
+    $('#gameover').html('<h1>GAME OVER. HIT ENTER TO RESET</h1>')
+  }
+  else{
+    $('#gameover').html('')
+  }
 }
 
 $(function(){
