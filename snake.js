@@ -184,7 +184,6 @@ var SnakeGame = (function(){
     }
 
     this.gameOver = function(){
-      console.log("GAME OVER")
       this.snake = new Snake(this.board);
       this.board.addApple();
       this.east = false;
@@ -200,7 +199,6 @@ var SnakeGame = (function(){
         this.gameOver();
       }
       else if (this.snake.eat()){
-        console.log("I ATE")
         this.snake.grow();
         this.board.addApple();
       }
