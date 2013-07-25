@@ -78,24 +78,9 @@ var SnakeGame = (function(){
       }
     };
 
-    this.nextSpot = function(){
+    this.dead = function(){
       var front = this.front();
       var nextXSpot = front.xPos + this.direction[0];
-<<<<<<< HEAD
-      var nextYSpot = front.yPos + this.direction[1];
-      return [nextXSpot, nextYSpot];
-    };
-
-    this.dead = function(){
-      var next = this.nextSpot();
-      return this.board.getPosition(next) === "snake" ||
-             this.board.offBoard(next);
-    };
-
-    this.eat = function(){
-      var next = this.nextSpot();
-      return this.board.getPosition(next) === "apple";
-=======
       var nextYSpot = front.yPos + this.direction[1]
       return this.board.getPosition([nextXSpot, nextYSpot]) === "snake" ||
              this.board.offBoard([nextXSpot, nextYSpot]);
@@ -106,7 +91,6 @@ var SnakeGame = (function(){
       var nextXSpot = front.xPos + this.direction[0];
       var nextYSpot = front.yPos + this.direction[1]
       return this.board.getPosition([nextXSpot, nextYSpot]) === "apple";
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
     };
 
     this.move = function(){
@@ -128,11 +112,7 @@ var SnakeGame = (function(){
   var SnakeElement = function(xPos, yPos){
     this.xPos = xPos;
     this.yPos = yPos;
-<<<<<<< HEAD
-  };
-=======
   }
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
 
   var Game = function(){
     this.board = new Board(SIZE);
@@ -156,8 +136,7 @@ var SnakeGame = (function(){
     this.losingSnake = 0
 
     this.nextMove = function(){
-      var direc = this.snake.direction;
-
+      var direc = this.snake.direction
       if (this.east){
         direc = [1,0];
       }
@@ -170,11 +149,7 @@ var SnakeGame = (function(){
       else if(this.north){
         direc = [0,1];
       }
-
       this.snake.setDirection(direc);
-<<<<<<< HEAD
-    };
-=======
 
       var direc2 = this.snake2.direction;
 
@@ -192,7 +167,6 @@ var SnakeGame = (function(){
       }
       this.snake2.setDirection(direc2);
     }
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
 
     this.gameOver = function(deadSnake){
       this.snake = new Snake(this.board);
@@ -223,10 +197,7 @@ var SnakeGame = (function(){
       }, SNAKESPEED);
       this.score = 0;
       this.stop = false;
-<<<<<<< HEAD
-=======
       this.losingSnake = 0;
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
     };
 
     this.increaseSpeed = function(){
@@ -234,13 +205,8 @@ var SnakeGame = (function(){
       window.clearInterval(SNAKEINTERVAL);
       SNAKEINTERVAL = window.setInterval(function(){
         that.step();
-<<<<<<< HEAD
-      }, SNAKESPEED - that.score/10);
-    };
-=======
       }, SNAKESPEED - that.score/2)
     }
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
 
     this.step = function(){
       this.nextMove();
@@ -261,15 +227,11 @@ var SnakeGame = (function(){
     this.start = function(){
       var that = this;
       that.board.update(this.snake);
-<<<<<<< HEAD
-      that.board.setPosition([8,5], "apple");
-=======
->>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
       SNAKEINTERVAL = window.setInterval(function(){
         that.step();
       }, SNAKESPEED);
     };
-  };
+  }
 
   return {
     Game: Game,
