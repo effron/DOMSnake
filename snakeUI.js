@@ -19,7 +19,7 @@ var run_step = function(){
   $('#score').html('<h1>' + game.score + '</h1>')
 
   if (game.stop){
-    $('#gameover').html('<h1>GAME OVER. HIT ENTER TO RESET</h1>')
+    $('#gameover').html('<h1>PLAYER ' + game.losingSnake + ' LOSES.</h1><h2> Press return to start a new game</h2>')
   }
   else{
     $('#gameover').html('')
@@ -43,16 +43,40 @@ $(function(){
       game.west = false;
     }
     else if(event.keyCode === 37){
-      game.nort = false;
+      game.north = false;
       game.south = false;
       game.east = false;
       game.west = true;
     }
     else if(event.keyCode === 39){
-      game.nort = false;
+      game.north = false;
       game.south = false;
       game.east = true;
       game.west = false;
+    }
+    if (event.keyCode === 65){
+      game.north2 = false;
+      game.south2 = false;
+      game.east2 = false;
+      game.west2 = true;
+    }
+    else if(event.keyCode === 87){
+      game.north2 = false;
+      game.south2 = true;
+      game.east2 = false;
+      game.west2 = false;
+    }
+    else if(event.keyCode === 83){
+      game.north2 = true;
+      game.south2 = false;
+      game.east2 = false;
+      game.west2 = false;
+    }
+    else if(event.keyCode === 68){
+      game.north2 = false;
+      game.south2 = false;
+      game.east2 = true;
+      game.west2 = false;
     }
 
     else if(event.keyCode === 13){

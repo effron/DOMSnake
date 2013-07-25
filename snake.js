@@ -1,8 +1,9 @@
 var SnakeGame = (function(){
 
-  var SIZE = 20
+  var SIZE = 30
   var SNAKESPEED = 100
   var SNAKEINTERVAL
+
   var Board = function(size){
     this.width = size;
     this.height = size;
@@ -26,40 +27,20 @@ var SnakeGame = (function(){
              coords[1] < 0 || coords[1] > this.height - 1 ;
     }
 
-    this.removeApple = function(){
-      var applePos = 0;
-      _.each(this.grid, function(elem, index){
-        if (elem === "apple"){
-          applePos = index;
-        }
-      });
-
-      this.grid[applePos] ="_";
-    }
-
-    this.addApple = function(){
-      this.removeApple();
-      var openPositions = []
-      _.each(this.grid, function(pos, index){
-        if (pos === "_"){
-          openPositions.push(index);
-        }
-      });
-      this.grid[openPositions[_.random(0,openPositions.length)]] = "apple"
-    }
-
-    this.update = function(snake){
+    this.update = function(snakes){
       var that = this;
       this.clearBoard();
-      _.each(snake.bodyParts, function(bodyPart, index){
-        var item = ""
-        if (index === 0){
-          item = "rattle"
-        }
-        else {
-          item = "snake"
-        }
-        that.setPosition([bodyPart.xPos, bodyPart.yPos], item)
+      _.each(snakes, function(snake, snakeNum){
+        _.each(snake.bodyParts, function(bodyPart, index){
+          var item = ""
+          if (index === 0){
+            item = "rattle"
+          }
+          else {
+            item = "snake"
+          }
+          that.setPosition([bodyPart.xPos, bodyPart.yPos], item)
+        })
       })
     }
 
@@ -72,27 +53,6 @@ var SnakeGame = (function(){
         }
       })
     }
-
-    this.printBoard = function(){
-      var that = this;
-      boardString = "";
-      _.each(this.grid, function(el, index){
-        if (index % that.width === 0){
-          boardString += "\n"
-        }
-
-        if (el === "apple")
-          boardString += "a";
-        else if(el === "snake")
-          boardString += "s";
-        else
-          boardString += "_";
-      })
-
-      return boardString
-    }
-
-    //add initial apple
 
   }
 
@@ -121,6 +81,7 @@ var SnakeGame = (function(){
     this.nextSpot = function(){
       var front = this.front();
       var nextXSpot = front.xPos + this.direction[0];
+<<<<<<< HEAD
       var nextYSpot = front.yPos + this.direction[1];
       return [nextXSpot, nextYSpot];
     };
@@ -134,6 +95,18 @@ var SnakeGame = (function(){
     this.eat = function(){
       var next = this.nextSpot();
       return this.board.getPosition(next) === "apple";
+=======
+      var nextYSpot = front.yPos + this.direction[1]
+      return this.board.getPosition([nextXSpot, nextYSpot]) === "snake" ||
+             this.board.offBoard([nextXSpot, nextYSpot]);
+    };
+
+    this.eat = function(){
+      var front = this.front();
+      var nextXSpot = front.xPos + this.direction[0];
+      var nextYSpot = front.yPos + this.direction[1]
+      return this.board.getPosition([nextXSpot, nextYSpot]) === "apple";
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
     };
 
     this.move = function(){
@@ -155,17 +128,32 @@ var SnakeGame = (function(){
   var SnakeElement = function(xPos, yPos){
     this.xPos = xPos;
     this.yPos = yPos;
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
 
   var Game = function(){
     this.board = new Board(SIZE);
     this.snake = new Snake(this.board);
+    this.snake2 = new Snake(this.board);
+    this.snake2.direction = [-1, 0];
+    this.snake2.move();
+    this.snake2.move();
+    this.snake2.move();
+    this.snake2.move();
     this.east = false;
     this.west = false;
     this.north = false;
     this.south = false;
+    this.east2 = false;
+    this.west2 = false;
+    this.north2 = false;
+    this.south2 = false;
     this.score = 0;
     this.stop = false;
+    this.losingSnake = 0
 
     this.nextMove = function(){
       var direc = this.snake.direction;
@@ -184,15 +172,46 @@ var SnakeGame = (function(){
       }
 
       this.snake.setDirection(direc);
+<<<<<<< HEAD
     };
+=======
 
-    this.gameOver = function(){
+      var direc2 = this.snake2.direction;
+
+      if (this.east2){
+        direc2 = [1,0];
+      }
+      else if(this.west2){
+        direc2 = [-1,0];
+      }
+      else if(this.south2){
+        direc2 = [0,-1];
+      }
+      else if(this.north2){
+        direc2 = [0,1];
+      }
+      this.snake2.setDirection(direc2);
+    }
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
+
+    this.gameOver = function(deadSnake){
       this.snake = new Snake(this.board);
-      this.board.addApple();
+      this.snake.direction = [1,0];
+      this.snake2 = new Snake(this.board);
+      this.snake2.direction = [-1, 0];
+      this.snake2.move();
+      this.snake2.move();
+      this.snake2.move();
+      this.snake2.move();
       this.east = false;
       this.west = false;
       this.north = false;
       this.south = false;
+      this.east2 = false;
+      this.west2 = false;
+      this.north2 = false;
+      this.south2 = false;
+      this.losingSnake = deadSnake;
       window.clearInterval(SNAKEINTERVAL);
       this.stop = true;
     };
@@ -204,6 +223,10 @@ var SnakeGame = (function(){
       }, SNAKESPEED);
       this.score = 0;
       this.stop = false;
+<<<<<<< HEAD
+=======
+      this.losingSnake = 0;
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
     };
 
     this.increaseSpeed = function(){
@@ -211,31 +234,37 @@ var SnakeGame = (function(){
       window.clearInterval(SNAKEINTERVAL);
       SNAKEINTERVAL = window.setInterval(function(){
         that.step();
+<<<<<<< HEAD
       }, SNAKESPEED - that.score/10);
     };
+=======
+      }, SNAKESPEED - that.score/2)
+    }
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
 
     this.step = function(){
       this.nextMove();
-
+      //snake 1
       if (this.snake.dead()){
-        this.gameOver();
+        this.gameOver(1);
       }
-      else if (this.snake.eat()){
-        this.snake.grow();
-        this.board.addApple();
-        this.score += 10;
-        this.increaseSpeed();
+      else if (this.snake2.dead()){
+        this.gameOver(2);
       }
-      else {
-        this.snake.move();
-      }
-      this.board.update(this.snake);
+
+      this.snake.grow();
+      this.snake2.grow();
+
+      this.board.update([this.snake,this.snake2]);
     };
 
     this.start = function(){
       var that = this;
       that.board.update(this.snake);
+<<<<<<< HEAD
       that.board.setPosition([8,5], "apple");
+=======
+>>>>>>> f4fcb6c65c050fb98642c3a6f73488add76de8b4
       SNAKEINTERVAL = window.setInterval(function(){
         that.step();
       }, SNAKESPEED);
