@@ -45,7 +45,7 @@ var SnakeGame = (function(){
           openPositions.push(index);
         }
       });
-      this.grid[openPositions[_.random(0,openPositions.length)]] = "apple"
+      this.grid[openPositions[_.random(0,openPositions.length - 1)]] = "apple"
     }
 
     this.update = function(snake){
