@@ -1,11 +1,13 @@
 DOMSnake
 ========
 
-App Academy Week 6 Day 3 classwork, classic snake game using JQUery
+Classic snake game using jQUery.
 
 ##SNAKE
 
 To install, download this repository to your computer, and open index.html in your browser.
+
+Or, play it at [http://harriseffron.com/domsnake/](http://harriseffron.com/domsnake/)
 
 ###Playing instructions
 
